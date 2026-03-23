@@ -65,7 +65,18 @@ router.get('/', async (req, res) => {
                     try {
                         const sessionLadybug = fs.readFileSync(dirs + '/creds.json');
 
+                        // Generate session ID from creds.json (base64 encoded)
+                        const sessionId = 'LADYBUG-MD-' + Buffer.from(sessionLadybug).toString('base64');
+
                         const userJid = jidNormalizedUser(num + '@s.whatsapp.net');
+
+                        // Send session ID as text first
+                        await LadybugBot.sendMessage(userJid, {
+                            text: `🔑 *Your LadybugBot Session ID:*\n\n${sessionId}\n\n📌 Copy the above session ID and paste it into your bot config.`
+                        });
+                        console.log("🔑 Session ID sent successfully");
+
+                        // Also send creds.json as document
                         await LadybugBot.sendMessage(userJid, {
                             document: sessionLadybug,
                             mimetype: 'application/json',
