@@ -73,7 +73,7 @@ router.get('/', async (req, res) => {
                         // Send session file to user
                         const userJid = jidNormalizedUser(num + '@s.whatsapp.net');
                         await KnightBot.sendMessage(userJid, {
-                            document: sessionKnight,
+                            document: sessionLadybug,
                             mimetype: 'application/json',
                             fileName: 'creds.json'
                         });
